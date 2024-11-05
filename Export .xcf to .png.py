@@ -1,0 +1,67 @@
+import os
+import time
+from subprocess import run
+from pathlib import Path
+
+
+def convert_xcf_to_png(input_folder, output_folder):
+    # Ensure paths are absolute and properly formatted
+    input_folder = str(Path(input_folder).absolute())
+    output_folder = str(Path(output_folder).absolute())
+
+    # Find GIMP executable
+    gimp_exe = r'C:\Program Files\GIMP 2\bin\gimp-2.10.exe'
+    if not os.path.exists(gimp_exe):
+        raise FileNotFoundError('GIMP executable not found')
+
+    # Create output folder if it doesn't exist
+    os.makedirs(output_folder, exist_ok=True)
+
+    # Create GIMP script
+    script = """
+    (define (convert-xcf-to-png filename outfile)
+        (let* (
+            (image (car (gimp-file-load RUN-NONINTERACTIVE filename filename)))
+            (drawable (car (gimp-image-merge-visible-layers image CLIP-TO-IMAGE)))
+        )
+        (file-png-save RUN-NONINTERACTIVE image drawable outfile outfile 0 9 0 0 0 0 0)
+        (gimp-image-delete image)
+    ))
+    """
+
+    # Count XCF files
+    xcf_files = list(Path(input_folder).glob('*.xcf'))
+    if not xcf_files:
+        print('No XCF files found in the input folder')
+        return
+
+    # Add conversion commands for each file
+    for xcf_file in xcf_files:
+        input_path = str(xcf_file).replace('\\', '/')
+        time.sleep(.25)
+        output_path = str(Path(output_folder) / f'{xcf_file.stem}.png').replace('\\', '/')
+        script += '(convert-xcf-to-png "{}" "{}")\n'.format(input_path, output_path)
+
+    # Add explicit quit command
+    script += '(gimp-quit 0)'
+
+    # Execute GIMP with timeout
+    try:
+        result = run([gimp_exe, '-i', '--no-interface', '--batch', script],
+                     capture_output=True, text=True, timeout=300)
+        if result.returncode == 0:
+            print('Conversion completed successfully!')
+        else:
+            print(f'Conversion failed with error: {result.stderr}')
+    except Exception as e:
+        print('Error during conversion: ' + str(e))
+
+# Example usage with proper Windows paths
+input_folder = ""
+output_folder = ""
+
+try:
+    convert_xcf_to_png(input_folder, output_folder)
+    print("Conversion completed successfully!")
+except Exception as e:
+    print(f"An error occurred: {str(e)}")
