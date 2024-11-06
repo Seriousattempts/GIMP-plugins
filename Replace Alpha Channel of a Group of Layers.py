@@ -61,6 +61,7 @@ register(
     "Replace alpha channel in layers within groups containing a search term",
     "Replaces every alpha channel in layers within groups containing a search term with a specified HTML color",
     "Jordan B",
+    "J",
     "2024",
     "<Image>/Colors/Replace Alpha Channel of a Group of Layers...",
     "*",
