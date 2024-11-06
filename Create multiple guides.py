@@ -36,6 +36,7 @@ register(
     "Create multiple guides",
     "Creates multiple vertical and/or horizontal guides at specified locations with an optional stopping point",
     "Jordan B",
+    "J",
     "2024",
     "<Image>/Image/Guides/Create Multiple Guides...",
     "*",
