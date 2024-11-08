@@ -17,7 +17,7 @@ Python files using GIMP version 2.10.83.
 - Replaces an html color across multiple layers simultaneously while preserving layer structure and alpha channels.
 
 6. [Create multiple guides](https://github.com/Seriousattempts/GIMP-plugins/blob/main/Create%20multiple%20guides.py)
-- Creates multiple guides in an image. Guides are evenly seperated. Can be applied vertically and horizontally.
+- Creates multiple guides in an image. Guides are evenly separated. Can be applied vertically and horizontally.
 7. [Create multiple layers](https://github.com/Seriousattempts/GIMP-plugins/blob/main/Create%20multiple%20layers.py)
 - Creates multiple layers at once in GIMP, with optional automatic numbering.
 8. [Create multiple text layers](https://github.com/Seriousattempts/GIMP-plugins/blob/main/Create%20multiple%20text%20layers.py)
